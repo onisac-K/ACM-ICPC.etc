@@ -1,68 +1,67 @@
-/*unfinished*/
-
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
-int n,k;
-// 0 -> right ; 1 -> left
+ll dp[55][25][2][50]; 
+int a[55][55];
+ll n ,k;
 
-set <string> s;
-set <string> vis;
-
-ll ans=0;
-void dfs(int num,int z,int fx,int paodao,string value)
+ll dfs(ll n2,ll n1,ll d,ll k1)
 {
-	if(vis.count(value))return ;
-	vis.insert(value);
-	if(num>2*n||z>2*k-1)return ;
-	if(paodao>n+1||paodao<=0)return ;
-	
-	if(num==2*n&&z==2*k-1&&paodao==1)
+	//cout<<n2<<' '<<n1<<' '<<d<<' '<<k1<<endl;
+	if(a[n2][n1]==0)return dp[n2][n1][d][k1]=0;
+	if(dp[n2][n1][d][k1]!=0)return dp[n2][n1][d][k1];
+	if(k1>2*k-1 || d>=2 ||  n2>2*n || k1>n2)
+		return dp[n2][n1][d][k1]=0;
+	if(n2==0 && n1==1 && d==1 && k1==0)
+		return  dp[n2][n1][d][k1]=1;
+	else if(n2==0)return dp[n2][n1][d][k1]=0;
+	if(n1>n&&k1>1)return dp[n2][n1][d][k1]=0;
+	ll ans = 0;
+	if(n1==1 && d==0)return dp[n2][n1][d][k1]=0;
+	if(n1==1 && d==1)
 	{
-		if(!s.count(value))
-		{
-			ans++;
-			//cout<<value<<endl;
-			s.insert(value);
+		if(n2==2*n)ans += dfs(n2-1,2,0,k1);
+		else ans += dfs(n2-1,2,0,k1-1);
+	}
+	else if(n1>1)
+	{
+		if(d==1){
+			if(k1-1>=0)ans += dfs(n2-1,n1+1,0,k1-1);
+			ans += dfs(n2-1,n1-1,1,k1);
 		}
+		if(d==0){
+			//cout<<123<<endl;
+			ans += dfs(n2-1,n1+1,0,k1);
+			if(k1-1>=0)ans += dfs(n2-1,n1-1,1,k1-1);
+		}	
 	}
-	int x=paodao+1;
-	int y=paodao-1;
-	int num1[50];
-	int c=0;
-	while(x>0)
-	{
-		num1[c++]=x%10;
-		x/=10;
-	}
-	string s1=value;
-	int lence1=s1.length();
-
-	
-	
-	if(fx==0)
-	{
-		dfs(num+1,z,0,paodao+1,value*10+paodao+1);
-		dfs(num+1,z+1,1,paodao-1,value*10+paodao-1);
-	}
-	if(fx==1)
-	{
-		dfs(num+1,z+1,0,paodao+1,value*10+paodao+1);
-		dfs(num+1,z,1,paodao-1,value*10+paodao-1);
-	}
+	return dp[n2][n1][d][k1]=ans;
 }
 
 int main()
 {
 	int t;
+	
 	cin>>t;
-	while(t--)
-	{
-		ans=0;
-		vis.clear();
-		s.clear();
-		cin>>n>>k;
-		dfs(0,0,0,1,"1");
-		cout<<ans<<endl;
+	
+	while(t--){
+		scanf("%d%d",&n,&k);
+	
+		 int i,j,kk;
+        for(i=0,j=1;i<=n;i+=2,j++)
+            for(kk=1;kk<=j;kk++){
+                a[i][2*kk-1]=1;
+                a[2*n-i][2*kk-1]=1;
+            }
+        for(i=1,j=1;i<=n;i+=2,j++)
+            for(kk=1;kk<=j;kk++){
+                a[i][2*kk]=1;
+                a[2*n-i][2*kk]=1;
+            }
+    	if(n==1)cout<<1<<endl;
+		else {
+			printf("%lld\n",dfs(2*n,1,1,2*k-1));
+		}
 	}
+	return 0;
 }

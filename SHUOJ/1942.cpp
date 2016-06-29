@@ -1,51 +1,37 @@
-/*unfinished*/
-
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
-#define PB push_back
-#define MP make_pair
+
+ll Pow(ll a,ll n,ll mod)      //ȡĤ�İ汾
+{
+		ll ans=1;
+		while(n)
+		{
+			if(n&1)
+			{
+				ans=ans*a;
+			ans%=mod;
+			}
+			a*=a;
+			a%=mod;
+			n>>=1;
+		}
+		ans%=mod;
+		return ans;
+}
+
+
 int main()
 {
 	ll a,b,k;
-	
 	while(cin>>a>>b>>k)
 	{
-		set<pair<ll,ll> >s;
-		vector<pair<ll,ll> >v;
-		s.insert(MP(a,b));
-		v.PB(MP(a,b));
-		ll i=0;
-		for(i=0;i<k;++i)
-		{
-			if(a<=b)
-			{
-				b-=a;
-				a*=2;
-			}
-			else 
-			{
-				a-=b;
-				b*=2;
-			}
-			cout<<a<<' '<<b<<endl;
-			pair<ll,ll> A=MP(a,b);
-			//if(s.count(A))break;
-			//else
-			{
-				s.insert(A);
-				v.PB(MP(a,b));
-			}
-		}
-		if(i>=k)
-		{
-			cout<<min(a,b)<<endl;
-			continue;
-		}
-		k%=i;
-		ll ans=min(v[k].first,v[k].second);
-		cout<<ans<<endl;
-		
-	}
+		ll c = a+b;
+		a = a*Pow(2,k,c);
+		b = b*Pow(2,k,c);
+		a%=c;
+		b%=c;
+		cout<<min(a,b)<<endl;
+	} 
 	return 0;
 }

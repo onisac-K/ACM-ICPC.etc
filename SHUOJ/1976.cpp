@@ -1,81 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
-int d[500001]={};
-void get_pri(int n, int k) {
-    int i, j,cnt=0,z=k,f=n;
-    while (k--) {
-        n=f-k;
-        for (i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                while (n % i == 0){
-                    n = n / i;
-                    d[i]++;
-                }
-            }
-        }
-        if(n!=1)
-        d[n]++;
-    }
-    while(z--){
-        int dd=z+1;
-        for (i = 2; i * i <= dd; i++) {
-            if (dd % i == 0) {
-                while (dd % i == 0){
-                   dd = dd / i;
-                    d[i]--;
-                }
-            }
-        }
-        if(dd!=1)
-        d[dd]--;
+#define REP(X,N) for(int X=0;X<N;X++)
+#define CLR(A,X) memset(A,X,sizeof(A))
+#define MAXN 100010
+#define INF 0x3f3f3f3f
+ 
+char str[3*MAXN],s[MAXN];
+int p[3*MAXN];
+int n,len;
+ 
+void manacher()
+{
+    len=n=strlen(s);
+    str[0]='$';
+    str[1]='#';
+    for(int i=0;i<n;i++)
+        str[2*i+2]=s[i],str[2*i+3]='#';
+    n=n*2+2;
+    str[n]=0;
+    int mx=0,id;
+    for(int i=1;i<n;i++)
+    {
+        if(mx>i)
+            p[i]=min(p[2*id-i],mx-i);
+        else
+            p[i]=1;
+        for(;str[i+p[i]]==str[i-p[i]];p[i]++)
+            ;
+        if(p[i]+i>mx)
+            mx=p[i]+i,id=i;
     }
 }
-
-int ans[105];
-
-void mul(int i)
-{	
-	//cout<<i<<endl;
-	for(int j=0;j<101;++j)
-	{
-		ans[j]*=i;		
-	}
-	for(int j=0;j<101;++j)
-	{
-		int x=ans[j]/10;
-		ans[j]%=10;
-		ans[j+1]+=x;
-	}
-}
-
-
-int main() {
-    long long m, n, k;
-    ans[0]=1;
-        memset(d,0,sizeof(d));
-        ans[0]=1;
-        scanf("%lld%lld", &m, &n);
-        n = n + m;
-        k = m;
-        get_pri(n, k);
-        //cout<<123<<endl;
-       
-
-        for(int i=2;i<200001;i++){
-            for(int j=0;j<d[i];j++){
-                mul(i);
-            }
+int res[MAXN];
+ 
+int main()
+{
+    //freopen("data.in","r",stdin);
+    //freopen("data.out","w",stdout);
+    while(gets(s))
+    {
+        manacher();
+        CLR(res,-1);
+        for(int i=1;i<n;i++)
+        {
+        	cout<<p[i]<<' ';
+            if(str[i]=='#' && p[i]==1)
+                continue;
+            int left=i-p[i]+2;
+            res[left/2-1]=max(res[left/2-1],p[i]-1);
         }
-        //cout<<a<<endl;
-       
-		for(int i=99;i>=0;--i)
-		{
-			if(i%10==0)
-			{
-				cout<<ans[i]<<endl;
-			}
-			else cout<<ans[i];
-		}
-    
+        cout<<endl;
+        int Max=res[0];
+        for(int i=0;i<len;i++)
+        {
+            if(res[i]>Max)
+                Max=res[i];
+            else
+                res[i]=Max;
+            Max-=2;
+        }
+        for(int i=0;i<len;i++)
+            printf("%d%c",res[i],i==len-1?'\n':' ');
+    }
     return 0;
 }

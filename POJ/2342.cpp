@@ -1,57 +1,55 @@
 #include<iostream>
-#include<cstring>
+#include<cmath>
 #include<cstdio>
+#include<cstring>
 using namespace std;
-#define mem(A,x) memset(A,x,sizeof(A));
-#define N 6005
+const int N = 6005;
 
-int dp[N][2];// 1 yes 0 no
-int pa[N],vis[N];
+int dp[N][2];
+int vis[N];
+int pa[N];
 int n;
 
-void dfs(int r)
+void dfs(int i)
 {
-	if(vis[r]!=0)return ;
-	vis[r]=1;
-	for(int i=0;i<n;++i)
+	//cout<<i<<endl;
+	if(vis[i])return ;
+	vis[i]=1;
+	for(int j=0;j<n;++j)
 	{
-		if(vis[i]==0&&pa[i]==r)
+		if(pa[j]==i&&vis[j]==0)
 		{
-			dfs(i);
-			dp[r][1]+=dp[i][0];
-			dp[r][0]+=max(dp[i][0],dp[i][1]);
+			dfs(j);
+			dp[i][0]+=max(dp[j][1],dp[j][0]);
+			dp[i][1]+=dp[j][0];
 		}
-	}	
+	}
 }
 
 int main()
 {
-	while(cin>>n)
+	cin>>n;
+	memset(pa,-1,sizeof(pa));
+	for(int i=0;i<n;++i)scanf("%d",&dp[i][1]) ;
+	int u,v;
+	for(int i=0;;++i)
 	{
-		mem(dp,0);
-		mem(pa,-1);
-		mem(vis,0);
-		for(int i=0;i<n;++i)scanf("%d",&dp[i][1]);
-		int u,v;
-		while(scanf("%d%d",&u,&v)!=EOF)
-		{
-			if(u==0&&v==0)break;
-			u--;
-			v--;
-			pa[u]=v;
-		}
-		int root=-1;
-		for(int i=0;i<n;++i)
-		{
-			if(pa[i]==-1)
-			{
-				root=i;
-				break;
-			}
-		}
-		dfs(root);
-		int ans=max(dp[root][0],dp[root][1]);
-		cout<<ans<<endl;
+		scanf("%d%d",&u,&v);
+		u--;
+		v--;
+		if(u==-1&&v==-1)break;
+		pa[u]=v;
 	}
+	for(int i=0;i<n;++i)
+	{
+		if(pa[i]==-1)
+		{
+			dfs(i);
+			//cout<<123<<endl;
+		}
+	}
+	int ans=0;
+	for(int i=0;i<n;++i)ans=max(dp[i][1],max(ans,dp[i][0]));
+	cout<<ans<<endl;
 	return 0;
-} 
+ } 
