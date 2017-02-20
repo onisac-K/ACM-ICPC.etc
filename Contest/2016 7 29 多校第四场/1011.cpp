@@ -1,0 +1,87 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	map<string,int>a;
+	a["Cleveland Cavaliers"]++;
+	a["Golden State Warriors"]++;
+	a["San Antonio Spurs"]++;
+	a["Miami Heat"]++;
+	a["Miami Heat"]++;
+	a["Dallas Mavericks"]++;
+	a["L.A. Lakers"]++;
+	a["L.A. Lakers"]++;
+	a["Boston Celtics"]++;
+	a["San Antonio Spurs"]++;
+	a["Miami Heat"]++;
+	a["San Antonio Spurs"]++;
+	a["Detroit Pistons"]++;
+	a["San Antonio Spurs"]++;
+	a["L.A. Lakers"]++;
+	a["L.A. Lakers"]++;
+	a["L.A. Lakers"]++;
+	a["San Antonio Spurs"]++;
+	a["Chicago Bulls"]++;
+	a["Chicago Bulls"]++;
+	a["Chicago Bulls"]++;
+	a["Houston Rockets"]++;
+	a["Houston Rockets"]++;
+	a["Chicago Bulls"]++;
+	a["Chicago Bulls"]++;
+	a["Chicago Bulls"]++;
+	a["Detroit Pistons"]++;
+	a["Detroit Pistons"]++;
+	a["L.A. Lakers"]++;
+	a["L.A. Lakers"]++;
+	a["Boston Celtics"]++;
+	a["L.A. Lakers"]++;
+	a["Boston Celtics"]++;
+	a["Philadelphia 76ers"]++;
+	a["L.A. Lakers"]++;
+	a["Boston Celtics"]++;
+	a["L.A. Lakers"]++;
+	a["Seattle Sonics"]++;
+	a["Washington Bullets"]++;
+	a["Portland Trail Blazers"]++;
+	a["Boston Celtics"]++;
+	a["Golden State Warriors"]++;
+	a["Boston Celtics"]++;
+	a["New York Knicks"]++;
+	a["L.A. Lakers"]++;
+	a["Milwaukee Bucks"]++;
+	a["New York Knicks"]++;
+	a["Boston Celtics"]++;
+	a["Boston Celtics"]++;
+	a["Philadelphia 76ers"]++;
+	a["Boston Celtics"]++;
+	a["Boston Celtics"]++;
+	a["Boston Celtics"]++;
+	a["Boston Celtics"]++;
+	a["Boston Celtics"]++;
+	a["Boston Celtics"]++;
+	a["Boston Celtics"]++;
+	a["Boston Celtics"]++;
+	a["St. Louis Hawks"]++;
+	a["Boston Celtics"]++;
+	a["Philadelphia Warriors"]++;
+	a["Syracuse Nats"]++;
+	a["Minneapolis Lakers"]++;
+	a["Minneapolis Lakers"]++;
+	a["Minneapolis Lakers"]++;
+	a["Rochester Royals"]++;
+	a["Minneapolis Lakers"]++;
+	a["Minneapolis Lakers"]++;
+	a["Baltimore Bullets"]++;
+	a["Philadelphia Warriors"]++;
+	int n;
+	cin>>n;
+	int f = 1;
+	getchar();
+	while(n--)
+	{
+		string s;
+		getline(cin,s);
+		printf("Case #%d: %d\n",f++,a[s]);
+	}
+	return 0;
+}
